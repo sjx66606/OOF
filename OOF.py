@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import numpy as np
 import sklearn.datasets as datasets
-from sklearn.model_selection import KFold,train_test_split   #交叉验证
+from sklearn.model_selection import KFold,train_test_split 
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import roc_auc_score,roc_curve,auc,f1_score, precision_score,confusion_matrix
 from sklearn.metrics import precision_recall_curve
@@ -35,10 +35,9 @@ def findX(test_other):
     global new_data_list
     
     cost = 0
-    #test_other  表示寻优的x的数据
+    #test_other  
     new_data = test_other
     
-    #计算生成的数据与0类数据的距离
     dist_list_0 = []
     for ind in class_0:
         dist = np.linalg.norm(test_other - scaler_x[ind])
@@ -47,7 +46,6 @@ def findX(test_other):
     #print(len(dist_list_0))
     #print(dist_0)
     
-    #计算生成的数据与1类数据的距离
     dist_list_1 = []
     for ind in class_1:
         dist = np.linalg.norm(test_other - scaler_x[ind])
@@ -56,7 +54,6 @@ def findX(test_other):
     #print(len(dist_list_1))
     #print(dist_1)
     
-    #计算生成的数据与0类数据的相似度
     sim_list_0 = []
     vec1 = np.array(test_other).reshape(1,-1)
     for ind in class_0:
@@ -67,7 +64,6 @@ def findX(test_other):
     #cos_sim = cosine_similarity(vec1.reshape(1, -1), vec2.reshape(1, -1))
     #print(sim_0)
 
-    #计算生成的数据与0类数据的
     sim_list_1 = []
     for ind in class_1:
         vec2 = np.array(scaler_x[ind]).reshape(1,-1)
@@ -85,7 +81,6 @@ def findX(test_other):
             new_sim.append(sim_0 - sim_1)
             
         else:
-            #计算新产生的数据跟原数据之间的差距
             dist_new_data = []
             for data in new_data_list:
                 dist = np.linalg.norm(test_other - data)
@@ -104,8 +99,6 @@ def findX(test_other):
     return cost
 
 def geneData(x,y):
-    # x: 输入对应的x
-    # y: 输入对应的类别
     scaler = MinMaxScaler()
     global scaler_x,data_class, class_0,class_1,new_dis,new_sim,new_data_list
     new_data_list = []
